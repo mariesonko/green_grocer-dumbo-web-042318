@@ -1,16 +1,16 @@
 def consolidate_cart(cart)
-  consolidated_hash = {}
+  final_cart = {}
   cart.each do |item|
     item.each do |item_name, item_hash|
-        if consolidated_hash.key?(item_name) == false
-          consolidated_hash[item_name] = item_hash
-          consolidated_hash[item_name][:count] = 1
+        if final_cart.key?(item_name) == false
+          final_cart[item_name] = item_hash
+          final_cart[item_name][:count] = 1
         else
-          consolidated_hash[item_name][:count] += 1
+          final_cart[item_name][:count] += 1
         end
     end
   end
-  consolidated_hash
+  final_cart
 end
 
 def apply_coupons(cart, coupon_array)
@@ -20,23 +20,23 @@ def apply_coupons(cart, coupon_array)
   elsif coupon_array.size == 0
     return cart
   else
-    consolidated_coupons_hash = {}
+    final_coupons = {}
     coupon_array.each do |coupon|
       item_name = coupon[:item]
-      if consolidated_coupons_hash.key?(item_name) == false
+      if final_coupons.key?(item_name) == false
         coupon = coupon.merge({coupon_count: 1})
-        consolidated_coupons_hash[item_name] = coupon
+        final_coupons[item_name] = coupon
       else
-          consolidated_coupons_hash[item_name][:num] += coupon[:num]
-          consolidated_coupons_hash[item_name][:coupon_count] += 1
+          final_coupons[item_name][:num] += coupon[:num]
+          final_coupons[item_name][:coupon_count] += 1
       end
     end
-    consolidated_coupons_hash.each do |consolidated_key, value|
+    final_coupons.each do |consolidated_key, value|
       if cart.key?(consolidated_key)
-        consolidated_coupon_number = consolidated_coupons_hash[consolidated_key][:num]
+        consolidated_coupon_number = final_coupons[consolidated_key][:num]
         cart_item_count = cart[consolidated_key][:count]
-        coupon_item_price = consolidated_coupons_hash[consolidated_key][:cost]
-        coupon_count = consolidated_coupons_hash[consolidated_key][:coupon_count]
+        coupon_item_price = final_coupons[consolidated_key][:cost]
+        coupon_count = final_coupons[consolidated_key][:coupon_count]
         cart_item_count_after_coupon = cart_item_count - consolidated_coupon_number
         cart_item_clearance = cart[consolidated_key][:clearance]
 
@@ -76,7 +76,7 @@ def checkout(cart, coupons)
         clearance_applied["#{item} W/COUPON"][:count] = clearance_applied[item][:count]
       end
     end
-end 
+end
     total += (item_hash[:price] * item_hash[:count])
     puts total
   end
