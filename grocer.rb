@@ -71,13 +71,12 @@ def checkout(cart, coupons)
   clearance_applied.each do |item, item_hash|
     if item_hash[:count] < 0
       item_hash[:count] = -(item_hash[:count])
-    end
     if !item.include?('W/COUPON')
       if clearance_applied[item][:count] < clearance_applied["#{item} W/COUPON"][:count]
         clearance_applied["#{item} W/COUPON"][:count] = clearance_applied[item][:count]
       end
     end
-
+end 
     total += (item_hash[:price] * item_hash[:count])
     puts total
   end
