@@ -31,17 +31,17 @@ def apply_coupons(cart, coupon_array)
           final_coupons[item_name][:coupon_count] += 1
       end
     end
-    final_coupons.each do |consolidated_key, value|
-      if cart.key?(consolidated_key)
-        consolidated_coupon_number = final_coupons[consolidated_key][:num]
-        cart_item_count = cart[consolidated_key][:count]
-        coupon_item_price = final_coupons[consolidated_key][:cost]
-        coupon_count = final_coupons[consolidated_key][:coupon_count]
-        cart_item_count_after_coupon = cart_item_count - consolidated_coupon_number
-        cart_item_clearance = cart[consolidated_key][:clearance]
+    final_coupons.each do |new_key, value|
+      if cart.key?(new_key)
+        new_coupon_number = final_coupons[new_key][:num]
+        cart_item_count = cart[new_key][:count]
+        coupon_item_price = final_coupons[new_key][:cost]
+        coupon_count = final_coupons[new_key][:coupon_count]
+        cart_item_count_after_coupon = cart_item_count - new_coupon_number
+        cart_item_clearance = cart[new_key][:clearance]
 
-        cart[consolidated_key][:count] = cart_item_count_after_coupon
-        cart["#{consolidated_key} W/COUPON"] = {price: coupon_item_price, clearance: cart_item_clearance, count: coupon_count}
+        cart[new_key][:count] = cart_item_count_after_coupon
+        cart["#{new_key} W/COUPON"] = {price: coupon_item_price, clearance: cart_item_clearance, count: coupon_count}
 
 
       end
