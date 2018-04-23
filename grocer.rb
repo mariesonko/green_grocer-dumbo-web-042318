@@ -1,4 +1,4 @@
-def consolidate_cart(cart: [])
+def consolidate_cart(cart)
   consolidated_hash = {}
   cart.each do |item|
     item.each do |item_name, item_hash|
@@ -13,7 +13,7 @@ def consolidate_cart(cart: [])
   consolidated_hash
 end
 
-def apply_coupons(cart: [], coupon_array: [])
+def apply_coupons(cart, coupon_array)
 
   if cart.size == 0
     return cart
@@ -50,7 +50,7 @@ def apply_coupons(cart: [], coupon_array: [])
   cart
 end
 
-def apply_clearance(cart: [])
+def apply_clearance(cart)
   cart.each do |item_name, item_hash|
     if item_hash[:clearance] == true
 
@@ -61,7 +61,7 @@ def apply_clearance(cart: [])
   cart
 end
 
-def checkout(cart: [], coupons: [])
+def checkout(cart, coupons)
   total = 0
   cart = consolidate_cart(cart)
   coupons_applied = apply_coupons(cart, coupons)
